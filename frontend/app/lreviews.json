@@ -1,0 +1,125 @@
+{
+    "reviews": [
+      {
+        "professor": "Dr. John Smith",
+        "subject": "Computer Science",
+        "stars": 5,
+        "review": "Excellent professor! Very knowledgeable and approachable."
+      },
+      {
+        "professor": "Dr. Emily Johnson",
+        "subject": "Mathematics",
+        "stars": 4,
+        "review": "Great teacher, but the exams were quite challenging."
+      },
+      {
+        "professor": "Dr. Michael Brown",
+        "subject": "Physics",
+        "stars": 3,
+        "review": "Average teaching style, but helpful during office hours."
+      },
+      {
+        "professor": "Dr. Sarah Davis",
+        "subject": "Chemistry",
+        "stars": 5,
+        "review": "Amazing lectures and very supportive!"
+      },
+      {
+        "professor": "Dr. David Wilson",
+        "subject": "Biology",
+        "stars": 2,
+        "review": "Not very engaging and the material was hard to follow."
+      },
+      {
+        "professor": "Dr. Laura Martinez",
+        "subject": "History",
+        "stars": 4,
+        "review": "Interesting lectures, but a lot of reading assignments."
+      },
+      {
+        "professor": "Dr. James Anderson",
+        "subject": "Philosophy",
+        "stars": 5,
+        "review": "Thought-provoking and inspiring!"
+      },
+      {
+        "professor": "Dr. Linda Thomas",
+        "subject": "Economics",
+        "stars": 3,
+        "review": "Good professor, but sometimes hard to understand."
+      },
+      {
+        "professor": "Dr. Robert Jackson",
+        "subject": "Political Science",
+        "stars": 4,
+        "review": "Engaging and knowledgeable, but tough grader."
+      },
+      {
+        "professor": "Dr. Karen White",
+        "subject": "Sociology",
+        "stars": 5,
+        "review": "Fantastic professor! Very caring and insightful."
+      },
+      {
+        "professor": "Dr. William Harris",
+        "subject": "Psychology",
+        "stars": 3,
+        "review": "Decent lectures, but the exams were tricky."
+      },
+      {
+        "professor": "Dr. Barbara Clark",
+        "subject": "English",
+        "stars": 4,
+        "review": "Great discussions and feedback on essays."
+      },
+      {
+        "professor": "Dr. Richard Lewis",
+        "subject": "Art History",
+        "stars": 5,
+        "review": "Passionate and knowledgeable about the subject."
+      },
+      {
+        "professor": "Dr. Susan Walker",
+        "subject": "Music",
+        "stars": 4,
+        "review": "Enjoyable classes, but a lot of practice required."
+      },
+      {
+        "professor": "Dr. Charles Hall",
+        "subject": "Engineering",
+        "stars": 3,
+        "review": "Good professor, but the projects were very demanding."
+      },
+      {
+        "professor": "Dr. Patricia Allen",
+        "subject": "Nursing",
+        "stars": 5,
+        "review": "Very supportive and knowledgeable."
+      },
+      {
+        "professor": "Dr. Christopher Young",
+        "subject": "Environmental Science",
+        "stars": 4,
+        "review": "Interesting lectures, but a lot of fieldwork."
+      },
+      {
+        "professor": "Dr. Jessica King",
+        "subject": "Anthropology",
+        "stars": 5,
+        "review": "Fascinating subject and great teaching style."
+      },
+      {
+        "professor": "Dr. Daniel Wright",
+        "subject": "Geography",
+        "stars": 3,
+        "review": "Average lectures, but helpful during office hours."
+      },
+      {
+        "professor": "Dr. Nancy Lopez",
+        "subject": "Linguistics",
+        "stars": 4,
+        "review": "Engaging and insightful, but a lot of assignments."
+      }
+    ]
+  }
+  
