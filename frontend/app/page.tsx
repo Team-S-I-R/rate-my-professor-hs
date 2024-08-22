@@ -17,12 +17,13 @@ export default function Home() {
 
   const [message, setMessage] = useState("");
   const sendMessage = async () => {
-    setMessages((messages: any) => [
-      ...messages,
+    if (message.trim() === "") return;
+    setMessages((prevMessages) => [
+      ...prevMessages,
       { role: "user", content: message },
       { role: "assistant", content: '' }
     ]);
-
+  
     setMessage("");
     const response = await fetch("/api/chat", {
       method: "POST",
@@ -30,30 +31,34 @@ export default function Home() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify([...messages, { role: "user", content: message }]),
-    }).then(async (res: any) => {
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-
-      let result = "";
-      return reader.read().then(function processText({ done, value }: any) {
-        if (done) {
-          return result;
-        }
-        const text = decoder.decode(value || new Uint8Array(), { stream: true });
-        setMessages((messages: any) => {
-          let lastMessage = messages[messages.length - 1];  
-          let otherMessages = messages.slice(0, messages.length - 1);
-          return [
-            ...otherMessages,
-            { ...lastMessage, content: lastMessage.content + text }
-          ]
-        });
-
-        return reader.read().then(processText);
-      });
     });
-
-  }
+  
+    const reader = response.body?.getReader();
+    const decoder = new TextDecoder();
+  
+    if (reader) {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const text = decoder.decode(value, { stream: true });
+        setMessages((prevMessages) => {
+          const lastMessage = prevMessages[prevMessages.length - 1];
+          const updatedMessages = prevMessages.slice(0, -1);
+          return [
+            ...updatedMessages,
+            { ...lastMessage, content: lastMessage.content + text }
+          ];
+        });
+      }
+    }
+  };
+  
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
 
   return (
     <main className="w-screen bg-neutral-900 bg-opacity-80 h-screen overflow-y-scroll no-scrollbar ">
@@ -83,9 +88,10 @@ export default function Home() {
                     <div
                       key={index}
                       className={`flex flex-col ${message.role === "assistant" ? "items-end" : "items-start"}`}>
-                      <div className={`text-sm ${message.role === "assistant" ? "text-black" : "text-orange-500"}`}>  
-                        {message.content}
-                      </div>
+                      <div 
+                        className={`text-sm ${message.role === "assistant" ? "text-black" : "text-orange-500"}`}
+                        dangerouslySetInnerHTML={{ __html: message.content }}
+                      />
                     </div>
                   ))}
                 </div>
@@ -97,6 +103,7 @@ export default function Home() {
                     placeholder="Type your message here..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
+                    onKeyPress={handleKeyPress}
                     />
                     <button onClick={sendMessage}>Send</button>
                 </div>
