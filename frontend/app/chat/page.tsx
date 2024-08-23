@@ -18,13 +18,13 @@ export default function Chat() {
 
   const sendMessage = async () => {
     if (message.trim() === "") return;
-  
+
     setMessages((prevMessages) => [
       ...prevMessages,
       { role: "user", content: message },
       { role: "assistant", content: '' }
     ]);
-  
+
     setMessage("");
     const response = await fetch("/api/chat", {
       method: "POST",
@@ -33,10 +33,10 @@ export default function Chat() {
       },
       body: JSON.stringify([...messages, { role: "user", content: message }]),
     });
-  
+
     const reader = response.body?.getReader();
     const decoder = new TextDecoder();
-  
+
     if (reader) {
       while (true) {
         const { done, value } = await reader.read();
@@ -93,7 +93,7 @@ export default function Chat() {
         </div>
         <div className="p-4 border-t">
           <textarea
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded text-gray-800" 
             placeholder="Type your message here..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}

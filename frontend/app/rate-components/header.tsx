@@ -6,7 +6,8 @@ export default function Header({ className = "" }) {
             <Link href="/" className="font-bold hover:underline">Professor Atlas</Link>
             <div>
                 <Link href="/chat" className="hover:underline mr-4">Chat</Link>
-                <Link href="/about" className="hover:underline">About Us</Link>
+                <Link href="/about" className="hover:underline mr-4">About Us</Link>
+                <Link href="/blog" className="hover:underline">Blog</Link>
             </div>
         </div>
     )
