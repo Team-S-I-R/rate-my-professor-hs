@@ -62,9 +62,9 @@ export default function Chat() {
   };
 
   return (
-    <main className="w-screen h-screen bg-neutral-900 bg-opacity-80 flex flex-col items-center justify-center">
+    <main className="w-screen h-screen bg-white flex flex-col items-center justify-center">
       <div className="absolute z-10 top-0 w-full">
-        <Header/>
+        <Header className="text-black"/>
       </div>
 
       <motion.div 
