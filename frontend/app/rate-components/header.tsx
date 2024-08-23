@@ -1,10 +1,13 @@
-export default function Header() {
+import Link from 'next/link';
 
+export default function Header() {
     return (
-    <>
-        <div className="w-full h-max p-8 bg-transparent text-white">
-            <p className="font-bold">Professor Atlas</p>
+        <div className="w-full h-max p-8 bg-transparent text-black flex justify-between items-center">
+            <Link href="/" className="font-bold hover:underline">Professor Atlas</Link>
+            <div>
+                <Link href="/chat" className="hover:underline mr-4">Chat</Link>
+                <Link href="/about" className="hover:underline">About Us</Link>
+            </div>
         </div>
-    </>
     )
 }
