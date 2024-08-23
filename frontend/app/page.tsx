@@ -18,7 +18,7 @@ export default function Home() {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      content: `Hello, I'm the Rate My Professor support assistant. 
+      content: `Hello, I'm the Professor Atlas support assistant. 
       How can I help you today? 
       We have a nice feature where you
       can copy a rate my professor link and I'll show you some stats on 
