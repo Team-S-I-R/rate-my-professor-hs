@@ -2,11 +2,17 @@
 
 import Image from "next/image";
 import Header from "../rate-components/header";
-import staticgif from '../asset/static.gif'
+import staticgif from '../asset/static.gif';
 import { motion } from "framer-motion";
 import { useState } from "react";
+import rehypeRaw from 'rehype-raw';
+import ReactMarkdown from 'react-markdown';
+import { scrapeDataFromWeb } from "../actions";
 
 export default function Chat() {
+  const [scrapeUrl, setScrapeUrl] = useState("");
+  const [mode, setMode] = useState("text");
+  
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -61,6 +67,25 @@ export default function Chat() {
     }
   };
 
+  const handleScrape = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const result = await scrapeDataFromWeb(scrapeUrl);
+      if (result.success) {
+        setScrapeUrl('');
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { role: "user", content: message },
+          { role: "assistant", content: result.message }
+        ]);
+        sendMessage();
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to scrape and store data');
+    }
+  };
+
   return (
     <main className="w-screen h-screen bg-white flex flex-col items-center justify-center">
       <div className="absolute z-10 top-0 w-full">
@@ -71,7 +96,7 @@ export default function Chat() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-[90vw] max-w-[500px] h-[75vh] bg-white rounded-xl overflow-hidden flex flex-col"
+        className="w-[90vw] max-w-[600px] h-[80vh] bg-white rounded-xl overflow-hidden flex flex-col"
       >
         <div className="flex-grow overflow-y-auto p-4">
           {messages.map((message: any, index: any) => (
@@ -86,25 +111,58 @@ export default function Chat() {
                     : "bg-green-100 text-green-800"
                 }`}
               >
-                {message.content}
+                <ReactMarkdown rehypePlugins={[rehypeRaw]}>{message.content}</ReactMarkdown>
               </div>
             </div>
           ))}
         </div>
         <div className="p-4 border-t">
-          <textarea
-            className="w-full p-2 border rounded text-gray-800" 
-            placeholder="Type your message here..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-          />
-          <button 
-            onClick={sendMessage}
-            className="mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition duration-300"
-          >
-            Send
-          </button>
+          {mode === "text" && (
+            <>
+              <div className="flex flex-col gap-2">
+                <p className="underline">Select a Mode</p>
+                <div className="flex gap-2">
+                  <button className="bg-blue-800 px-4 rounded-lg text-white p-2" onClick={() => setMode("text")}>Text</button>
+                  <button className="bg-blue-800 px-4 rounded-lg text-white p-2" onClick={() => setMode("url")}>URL</button>
+                </div>
+              </div>
+              <textarea
+                className="w-full p-2 border rounded text-gray-800" 
+                placeholder="Type your message here..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+              />
+              <button 
+                onClick={sendMessage}
+                className="mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition duration-300"
+              >
+                Send
+              </button>
+            </>
+          )}
+
+          {mode === "url" && (
+            <>
+              <div className="flex flex-col gap-2">
+                <p className="underline">Select a Mode</p>
+                <div className="flex gap-2">
+                  <button className="bg-blue-800 px-4 rounded-lg text-white p-2" onClick={() => setMode("text")}>Text</button>
+                  <button className="bg-blue-800 px-4 rounded-lg text-white p-2" onClick={() => setMode("url")}>URL</button>
+                </div>
+              </div>
+              <form onSubmit={handleScrape} className="flex">
+                <input
+                  type="text"
+                  value={scrapeUrl}
+                  onChange={(e) => setScrapeUrl(e.target.value)}
+                  placeholder="Enter RateMyProfessor URL"
+                  className="w-full p-2 border rounded text-gray-800"
+                />
+                <button type="submit" className="bg-black hover:bg-gray-800 px-4 rounded-lg text-white p-2">Scrape</button>
+              </form>
+            </>
+          )}
         </div>
       </motion.div>
     </main>
